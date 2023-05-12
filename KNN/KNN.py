@@ -6,11 +6,36 @@ from collections import Counter
 
 
 def euclidean_distance(instance1, instance2):
+    """
+    Computes the Euclidean distance between two instances.
+
+    Args:
+        instance1 (numpy.ndarray): First instance.
+        instance2 (numpy.ndarray): Second instance.
+
+    Returns:
+        float: The Euclidean distance between the two instances.
+
+    """
     distance = np.sqrt(np.sum((instance1 - instance2) ** 2))
     return distance
 
 
 def knn(test_instance, x_train, y_train, k):
+    """
+    Performs k-nearest neighbors classification for a test instance.
+
+    Args:
+        test_instance (numpy.ndarray): Test instance for classification.
+        x_train (numpy.ndarray): Training data matrix of shape (m, n), where m is the number of training examples
+                                  and n is the number of features.
+        y_train (numpy.ndarray): Target values of the training examples, of shape (m,).
+        k (int): Number of nearest neighbors to consider for classification.
+
+    Returns:
+        Any: The predicted label for the test instance.
+
+    """
     # compute distances
     distances = [euclidean_distance(test_instance, train_instance) for train_instance in x_train]
 
@@ -24,8 +49,24 @@ def knn(test_instance, x_train, y_train, k):
 
 
 def predict_from_scratch(x_test, x_train, y_train, k):
-    predections = [knn(x, x_train, y_train, k) for x in x_test]
-    return predections
+    """
+    Performs predictions for multiple test instances using the k-nearest neighbors algorithm.
+
+    Args:
+        x_test (numpy.ndarray): Test data matrix of shape (m, n), where m is the number of test instances
+                                and n is the number of features.
+        x_train (numpy.ndarray): Training data matrix of shape (m, n), where m_train is the number of training examples
+                                  and n is the number of features.
+        y_train (numpy.ndarray): Target values of the training examples, of shape (m,).
+        k (int): Number of nearest neighbors to consider for classification.
+
+    Returns:
+        list: A list containing the predicted labels for the test instances.
+
+    """
+    predictions = [knn(x, x_train, y_train, k) for x in x_test]
+    return predictions
+
 
 # Main
 df = pd.read_csv('BankNote_Authentication.csv')
